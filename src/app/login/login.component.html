@@ -1,7 +1,7 @@
-<mat-toolbar color="primary">
-<mat-toolbar-row>
-    <span>Gruplu</span>
-    <span class="example-fill-remaining-space"></span>
-    <span class="align-center"></span>
-    <span class="example-spacer"></span>
-</mat-toolbar-row>
+<form>
+    <label for="username">Username:</label><br>
+    <input type="text" [(ngModel)]="username" id="username" name="username"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" [(ngModel)]="password" id="password" name="password"><br>
+    <button type="button">Log In</button>
+</form>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
+import { Component, OnInit, Input } from '@angular/core';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,16 +8,23 @@ import { MatInputModule } from '@angular/material/input';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  username: string;
-  password: string;
-  constructor() { }
+  @Input() username: string;
+  @Input() password: string;
+  constructor(private userSvc: UserService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  LoginUser(): void {
-    if (this.username == "sample" && this.password == "sample") {
-      console.log('hello');
+  onLogin() {
+    if (this.username && this.password) {
+      this.userSvc.login(val.email, val.password)
+      .subscribe(
+        () => {
+          console.log('Logged in');
+          this.router.navigateByUrl('/');
+        }
+      )
     }
   }
+  
 }

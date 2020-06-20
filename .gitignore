@@ -44,3 +44,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+src/stories/0-Welcome.stories.ts
+src/stories/1-Button.stories.ts
