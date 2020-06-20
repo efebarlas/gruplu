@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "gruplu": {
+      "hosting": {
+        "gruplu": [
+          "gruplu"
+        ]
+      }
+    }
+  }
+}
