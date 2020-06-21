@@ -1,2 +1,12 @@
-<p>hi bruh</p>
-<button (click)="logout()">Logout</button>
+<div class="parent">
+    <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+        <div *cdkVirtualFor="let post of group_posts; templateCacheSize: 0" class="example-item"><p>{{post.id}}</p></div>
+    </cdk-virtual-scroll-viewport>
+    <div class="buttons">
+        <button (click)="logout()">Logout</button>
+        <button (click)="add_post_user()">Add Post as User</button>
+    </div>
+    <app-compose *ngIf="showCompose"></app-compose>
+    <!--<button (click)="add_post_group()"></button>-->
+    
+</div>

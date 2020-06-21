@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,8 +10,15 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   constructor(private auth: AngularFireAuth, private router: Router) { }
+
+  group_posts = Array.from({length: 1000000}, (_, id) => ({id}));
+  showCompose: boolean = false;
+
   logout() {
     this.auth.signOut().then(() => {this.router.navigateByUrl('/login');});
+  }
+  add_post_user() {
+    this.showCompose = !this.showCompose;
   }
   ngOnInit(): void {
   }

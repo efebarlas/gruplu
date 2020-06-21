@@ -1,0 +1,48 @@
+cdk-virtual-scroll-viewport {
+    z-index: 1;
+    position: absolute;
+    height: 50vh;
+    background: seagreen;
+    width: 80%;
+    li {
+      height: 100px;
+    }
+  
+    // Bonus points
+    &::-webkit-scrollbar {
+      width: 1em;
+    }
+  
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: rgb(238, 169, 79);
+    }
+  }
+
+  app-compose{
+    position: absolute;
+    z-index: 1;
+
+  }
+  .buttons {
+    align-self:flex-start;
+    margin-right: auto;
+    position: absolute;
+    float: left;
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    z-index:1;
+  }
+  .parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+    height: 100%;
+  }

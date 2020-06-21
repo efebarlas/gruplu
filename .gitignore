@@ -46,3 +46,5 @@ testem.log
 Thumbs.db
 src/stories/0-Welcome.stories.ts
 src/stories/1-Button.stories.ts
+.firebase/hosting.ZGlzdA.cache
+.firebase/hosting.ZGlzdFxncnVwbHU.cache
