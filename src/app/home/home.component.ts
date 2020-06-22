@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   logout() {
     this.auth.signOut().then(() => {this.router.navigateByUrl('/login');});
   }
-  add_post_user() {
+  compose_open() {
     this.showCompose = !this.showCompose;
   }
   ngOnInit(): void {
