@@ -22,7 +22,11 @@ cdk-virtual-scroll-viewport {
       background-color: rgb(238, 169, 79);
     }
   }
-
+  app-compose{
+    position: absolute;
+    z-index: 1;
+    border-style: dotted;
+  }
   .buttons {
     align-self:flex-start;
     margin-right: auto;

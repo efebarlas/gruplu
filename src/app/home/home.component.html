@@ -1,12 +1,12 @@
 <div class="parent">
     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-        <div *cdkVirtualFor="let post of group_posts; templateCacheSize: 0" class="example-item"><p>{{post.id}}</p></div>
+        <div *cdkVirtualFor="let post of posts; templateCacheSize: 20" class="example-item"><p>{{post.text}}</p></div>
     </cdk-virtual-scroll-viewport>
     <div class="buttons">
         <button (click)="logout()">Logout</button>
-        <button (click)="compose_open()">Add Post as User</button>
+        <button #toggle (click)="toggleCompose()">Add Post as User</button>
     </div>
-    <app-compose *ngIf="showCompose"></app-compose>
+    <app-compose *ngIf="showCompose" (onClose)="closeCompose()"></app-compose>
     <!--<button (click)="add_post_group()"></button>-->
     
 </div>

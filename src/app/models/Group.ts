@@ -3,8 +3,8 @@ import { Poster } from './Poster';
 
 export class Group extends Poster {
     members: User[]; 
-    constructor(id: number, name: string, creator: User) {
-        super(id, name);
+    constructor(name: string, creator: User) {
+        super(name);
         this.members = [creator];
     }
 }

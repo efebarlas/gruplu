@@ -1,11 +1,9 @@
 import { Post } from './Post';
 
 export class Poster {
-    id: number;
     name: string;
     posts: Post[];
-    constructor(id: number, name: string) {
-        this.id = id;
+    constructor(name: string) {
         this.name = name;
         this.posts = [];
     }
