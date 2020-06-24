@@ -4,9 +4,11 @@
     </cdk-virtual-scroll-viewport>
     <div class="buttons">
         <button (click)="logout()">Logout</button>
+        <button #toggle_group (click)="toggleGroup()">Add Group</button>
         <button #toggle (click)="toggleCompose()">Add Post as User</button>
     </div>
-    <app-compose *ngIf="showCompose" (onClose)="closeCompose()"></app-compose>
+    <app-compose [userId]="userId" *ngIf="showCompose" (onClose)="closeCompose()"></app-compose>
+    <app-create-group *ngIf="showGroup" (onClose)="closeGroup()"></app-create-group>
     <!--<button (click)="add_post_group()"></button>-->
     
 </div>

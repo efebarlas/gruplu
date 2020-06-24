@@ -10,12 +10,14 @@ import { AngularFireModule } from '@angular/fire';
 import { HomeComponent } from './home/home.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ComposeComponent } from './compose/compose.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
     ComposeComponent,
+    CreateGroupComponent,
   ],
   imports: [
     BrowserModule,

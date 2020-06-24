@@ -22,7 +22,8 @@ cdk-virtual-scroll-viewport {
       background-color: rgb(238, 169, 79);
     }
   }
-  app-compose{
+  app-compose, app-create-group{
+    background: white;
     position: absolute;
     z-index: 1;
     border-style: dotted;
