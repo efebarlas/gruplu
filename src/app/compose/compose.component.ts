@@ -3,9 +3,10 @@ import { Post } from '../models/Post';
 import { Poster } from '../models/Poster';
 import { Group } from '../models/Group';
 import { User } from '../models/User';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-compose',
   templateUrl: './compose.component.html',
@@ -15,7 +16,7 @@ export class ComposeComponent implements OnInit {
   @Input() userId: string;
   
   @Input() post_text: string;
-  @Input() on_behalf_of: Poster;
+  @Input() on_behalf: DocumentReference;
 
   private wasInside = true;
   @Output() onClose: EventEmitter<boolean> = new EventEmitter();
@@ -40,12 +41,12 @@ export class ComposeComponent implements OnInit {
 
   add_post() {
     let date = new Date();
-    let path = this.on_behalf_of instanceof Group ? '/groups' : '/users';
     this.postCollection.add({
       text: this.post_text,
-      on_behalf_of: this.afs.collection(path).doc().ref,
+      on_behalf_of: this.afs.doc(this.on_behalf).ref,
       date: date
-    }).then(() => {
+    }).then((post) => {
+      this.userSvc.addPostToPoster(post, this.on_behalf);
       this.onClose.emit(true);
     });
   }

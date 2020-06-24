@@ -65,8 +65,7 @@ export class UserService {
       this.getRoles().subscribe((roleRefs) => {
           roleRefs.forEach((roleRef) => {
             roleRef.get().then((snap) => {
-              console.log('s');
-              arr.push(snap.data()['name']);
+              arr.push([roleRef.path, snap.data()['name']]);
             })
           });
         })
@@ -74,6 +73,19 @@ export class UserService {
     });
     
     return returningObs;
+  }
+
+  addPostToPoster(postRef: DocumentReference, poster: DocumentReference) {
+    const posterRef = this.afs.doc(poster);
+    
+    let postsList = [];
+    posterRef.get().subscribe((poster) => {
+      postsList = poster.data().posts;
+    });
+
+    postsList.push(postRef);
+    posterRef.update({posts: postsList});
+
   }
 
   async addGroup(name: string) {
