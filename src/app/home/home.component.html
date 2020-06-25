@@ -1,6 +1,11 @@
 <div class="parent">
-    <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-        <div *cdkVirtualFor="let post of posts; templateCacheSize: 20" class="example-item"><p>{{post.text}}</p></div>
+    <cdk-virtual-scroll-viewport *ngIf="!posts.includes(undefined)" itemSize="20" class="example-viewport">
+        <div *cdkVirtualFor="let post of posts; templateCacheSize: 20" class="example-item">
+            <p>{{post.poster}}</p>
+            <p>{{post?.text}}</p>
+            <p>{{post?.date}}</p>
+            <br>
+        </div>
     </cdk-virtual-scroll-viewport>
     <div class="buttons">
         <button (click)="logout()">Logout</button>

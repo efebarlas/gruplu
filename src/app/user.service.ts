@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, DocumentReference, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { auth } from 'firebase/app';
 import { User } from './models/User';
 import { concat } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap, take } from 'rxjs/operators';
 import { Poster } from './models/Poster';
 import { Group } from './models/Group';
+import { Post } from './models/Post';
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +78,7 @@ export class UserService {
 
   addPostToPoster(postRef: DocumentReference, poster: DocumentReference) {
     const posterRef = this.afs.doc(poster);
-    
+
     let postsList = [];
     posterRef.get().subscribe((poster) => {
       postsList = poster.data().posts;
@@ -110,6 +111,12 @@ export class UserService {
 
   }
 
+  getPoster(post: Post): Observable<String> {
+    return new Observable<String>(obs => {
+      console.log(this.afs.doc(post.on_behalf_of));
+      obs.next(post.on_behalf_of.toString());
+    });
+  }
 
   async login() {
     try {
