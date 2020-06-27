@@ -11,6 +11,11 @@ import { HomeComponent } from './home/home.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ComposeComponent } from './compose/compose.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { SetnameComponent } from './setname/setname.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +23,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     HomeComponent,
     ComposeComponent,
     CreateGroupComponent,
+    SetnameComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +31,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     BrowserAnimationsModule,
     FormsModule,
     ScrollingModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [],

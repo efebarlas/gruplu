@@ -20,6 +20,7 @@ export class ComposeComponent implements OnInit {
 
   private wasInside = true;
   @Output() onClose: EventEmitter<boolean> = new EventEmitter();
+  @Output() onRefresh: EventEmitter<boolean> = new EventEmitter();
 
   roles: Observable<unknown>;
   roleNames: Observable<unknown>;
@@ -48,6 +49,7 @@ export class ComposeComponent implements OnInit {
     }).then((post) => {
       this.userSvc.addPostToPoster(post, this.on_behalf);
       this.onClose.emit(true);
+      this.onRefresh.emit(true);
     });
   }
   ngOnInit(): void {

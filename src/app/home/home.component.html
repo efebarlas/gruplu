@@ -1,19 +1,20 @@
 <div class="parent">
-    <cdk-virtual-scroll-viewport *ngIf="!posts.includes(undefined)" itemSize="20" class="example-viewport">
-        <div *cdkVirtualFor="let post of posts; templateCacheSize: 20" class="example-item">
-            <p>{{post.poster}}</p>
-            <p>{{post?.text}}</p>
-            <p>{{post?.date}}</p>
-            <br>
+    <ng-container *ngIf="infinite | async as posts">
+        <cdk-virtual-scroll-viewport itemSize="100" (scrolledIndexChange)="nextBatch($event, (posts[posts.length - 1].date))" class="example-viewport">
+            <div *cdkVirtualFor="let post of posts; templateCacheSize: 20; trackBy: trackByIdx" class="example-item">
+                <p>{{post.poster}}</p>
+                <p>{{post?.text}}</p>
+                <p>{{post?.date}}</p>
+                <br>
+            </div>
+        </cdk-virtual-scroll-viewport>
+        <div class="buttons">
+            <button (click)="logout()">Logout</button>
+            <button #toggle_group (click)="toggleGroup()">Add Group</button>
+            <button #toggle (click)="toggleCompose()">Add Post as User</button>
         </div>
-    </cdk-virtual-scroll-viewport>
-    <div class="buttons">
-        <button (click)="logout()">Logout</button>
-        <button #toggle_group (click)="toggleGroup()">Add Group</button>
-        <button #toggle (click)="toggleCompose()">Add Post as User</button>
-    </div>
-    <app-compose [userId]="userId" *ngIf="showCompose" (onClose)="closeCompose()"></app-compose>
-    <app-create-group *ngIf="showGroup" (onClose)="closeGroup()"></app-create-group>
-    <!--<button (click)="add_post_group()"></button>-->
-    
+        <app-compose [userId]="userId" *ngIf="showCompose" (onRefresh)="refresh()" (onClose)="closeCompose()"></app-compose>
+        <app-create-group *ngIf="showGroup" (onClose)="closeGroup()"></app-create-group>
+        <!--<button (click)="add_post_group()"></button>-->
+    </ng-container>
 </div>

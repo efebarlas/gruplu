@@ -22,37 +22,45 @@ export class UserService {
               private afs: AngularFirestore,
               private router: Router) {
     this.auth.authState.subscribe(user => {
-      if(user) this.userId = user.uid;
-      let strr = `users/${this.userId}`;
-      this.afs.doc(strr).snapshotChanges().subscribe((docSnapshot) => {
-        if (!docSnapshot.payload.exists) {
-          this.afs.collection(`users`).doc(this.userId).set({uid: this.userId});
-        } else {
+      if(user) {
+        this.userId = user.uid;
+        let strr = `users/${this.userId}`;
+        this.afs.doc(strr).snapshotChanges().subscribe((docSnapshot) => {
+          if (!docSnapshot.payload.exists) {
+            this.afs.collection(`users`).doc(this.userId).set({uid: this.userId});
+          } else {
             if(!docSnapshot.payload.data()['roles']) {
               this.afs.doc(`users/${this.userId}`).update({roles: [this.afs.doc(`users/${this.userId}`).ref]});
             } 
-            if (!docSnapshot.payload.data()['name']) {
-              this.afs.doc(`users/${this.userId}`).update({name: 'isyanqar47'});
+            if (!docSnapshot.payload.data()['name'] || docSnapshot.payload.data()['name'] == 'isyanqar47') {
+              this.router.navigateByUrl('/name');
             }
             if (!docSnapshot.payload.data()['posts']) {
               this.afs.doc(`users/${this.userId}`).update({posts: []});
             }
-        }
-      });
+          }
+        });
+      }
     });
     
    }
   
-
+  isNameUnique(name: String):  Observable<boolean>{
+    return this.afs.collection('users', ref => ref.where("name", "==", name))
+    .get().pipe(
+      map((usersRef) => !(usersRef && usersRef.size > 0))
+    );
+  }
   hasName() {
 
 
   }
 
-  setName(name: string) {
-
-
+  updateName(name_: String) {
+    this.afs.doc(`users/${this.userId}`).update({name: name_});
+    this.router.navigateByUrl('');
   }
+
   getRoles(): Observable<DocumentReference[]> {
     // return an observable of strings
     let user = this.afs.doc(`users/${this.userId}`).valueChanges();
@@ -82,10 +90,11 @@ export class UserService {
     let postsList = [];
     posterRef.get().subscribe((poster) => {
       postsList = poster.data().posts;
+      postsList.push(postRef);
+      posterRef.update({posts: postsList});
     });
 
-    postsList.push(postRef);
-    posterRef.update({posts: postsList});
+    
 
   }
 
@@ -127,6 +136,5 @@ export class UserService {
   
   async logout() {
     await this.auth.signOut();
-    return this.router.navigateByUrl('/login');
   }
 }
