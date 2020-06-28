@@ -1,8 +1,8 @@
 <div class="parent">
     <ng-container *ngIf="infinite | async as posts">
         <cdk-virtual-scroll-viewport itemSize="100" (scrolledIndexChange)="nextBatch($event, (posts[posts.length - 1].date))" class="example-viewport">
-            <div *cdkVirtualFor="let post of posts; templateCacheSize: 20; trackBy: trackByIdx" class="example-item">
-                <p>{{post.poster}}</p>
+            <div *cdkVirtualFor="let post of posts; templateCacheSize: 5; trackBy: trackByIdx" class="example-item">
+                <a [routerLink]="[post.poster.isGroup ? '/groups' : '/users', post.poster.name]">{{post.poster.name}}</a>
                 <p>{{post?.text}}</p>
                 <p>{{post?.date}}</p>
                 <br>

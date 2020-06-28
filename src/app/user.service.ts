@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, DocumentReference, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import { AngularFirestore, DocumentReference, AngularFirestoreDocument, DocumentSnapshot, DocumentData, Action, DocumentChangeAction } from '@angular/fire/firestore';
+import { Router, PRIMARY_OUTLET } from '@angular/router';
 import { auth } from 'firebase/app';
 import { User } from './models/User';
 import { concat } from 'rxjs';
@@ -45,15 +45,25 @@ export class UserService {
     
    }
   
+
+  get(docId: string, field: string): Observable<any> {
+    return this.afs.doc(docId).get().pipe(
+      map((docRef) => docRef.data()[field])
+    );
+  }
+
+  
   isNameUnique(name: String):  Observable<boolean>{
     return this.afs.collection('users', ref => ref.where("name", "==", name))
     .get().pipe(
       map((usersRef) => !(usersRef && usersRef.size > 0))
     );
   }
-  hasName() {
-
-
+  isGroupNameUnique(name: String): Observable<boolean> {
+    return this.afs.collection('groups', ref => ref.where("name", "==", name))
+    .get().pipe(
+      map((usersRef) => !(usersRef && usersRef.size > 0))
+    );
   }
 
   updateName(name_: String) {
@@ -68,6 +78,17 @@ export class UserService {
     return obs;
   }
 
+  getDoc(docId: string): Observable<Action<DocumentSnapshot<any>>> {
+    return this.afs.doc(docId).snapshotChanges();
+  }
+  getDocByUrl(docUrl: string): Observable<any> {
+    const tree = this.router.parseUrl(docUrl).root.children[PRIMARY_OUTLET];
+    const posterType = tree.segments[0].toString();
+    const name = tree.segments[1].toString();
+    return this.afs.collection(posterType, ref => ref.where('name', '==', name).limit(1)).snapshotChanges().pipe(
+      map(ref => ref[0].payload.doc.data())
+    );
+  }
   getRoleNames() {
     let arr = [];
     let returningObs = new Observable((observer) => {

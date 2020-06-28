@@ -1,5 +1,6 @@
 import { UserService } from '../user.service';
 import { Component, OnInit, Input, HostListener, Output, EventEmitter } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-group',
@@ -12,11 +13,21 @@ export class CreateGroupComponent implements OnInit {
   
   @Output() onClose: EventEmitter<boolean> = new EventEmitter();
   private wasInside = true;
+  name = new FormControl('',Validators.required);
+  _isUnique : boolean = true;
 
   add_group() {
-    this.userSvc.addGroup(this.group_name).then(() => {
-      this.onClose.emit(true);
-    });;
+    const name = this.name.value;
+    this.userSvc.isGroupNameUnique(name).subscribe((isUnique) => {
+      if (isUnique) {
+        this.userSvc.addGroup(name).then(()=>{
+          this.onClose.emit(true);
+        });
+      } else {
+        this._isUnique = false;
+        setTimeout(()=>{this._isUnique = true}, 1000);
+      }
+    });
   }
   constructor(private userSvc: UserService) { }
 

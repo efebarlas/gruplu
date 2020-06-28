@@ -71,11 +71,11 @@ export class HomeComponent implements OnInit {
         return arr.reduce((acc, cur) => {
           const id = cur.payload.doc.id;
           const data = cur.payload.doc.data() as Post;
-          const dp = new DisplayedPost(data.text, 'anonim', data.date);
+          const dp = new DisplayedPost(data.text, {isGroup: undefined, name: 'anonim'}, data.date);
           if (data.on_behalf_of && data.on_behalf_of.path) {
             this.afs.doc(data.on_behalf_of).valueChanges().subscribe(postRef=> {
                 if (postRef) {
-                  dp.poster = postRef['name'];
+                  dp.poster = {isGroup: Boolean(postRef['members']),name: postRef['name']};
                 }
             });
           }

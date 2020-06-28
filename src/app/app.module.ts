@@ -13,6 +13,8 @@ import { ComposeComponent } from './compose/compose.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { SetnameComponent } from './setname/setname.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { GroupProfileComponent } from './group-profile/group-profile.component';
 
 
 
@@ -24,6 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ComposeComponent,
     CreateGroupComponent,
     SetnameComponent,
+    UserProfileComponent,
+    GroupProfileComponent,
   ],
   imports: [
     BrowserModule,
