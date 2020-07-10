@@ -1,0 +1,15 @@
+.parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+    height: 100%;
+  }
+
+  app-edit {
+    background: white;
+    position: absolute;
+    z-index: 1;
+    border-style: dotted;
+  }

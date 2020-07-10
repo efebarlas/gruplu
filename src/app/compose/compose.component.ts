@@ -6,39 +6,26 @@ import { User } from '../models/User';
 import { AngularFirestore, DocumentReference, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 import { Observable } from 'rxjs';
+import { ClickAway } from '../ClickAway';
 
 @Component({
   selector: 'app-compose',
   templateUrl: './compose.component.html',
   styleUrls: ['./compose.component.scss']
 })
-export class ComposeComponent implements OnInit {
+export class ComposeComponent extends ClickAway implements OnInit {
   @Input() userId: string;
   
   @Input() post_text: string;
   @Input() on_behalf: DocumentReference;
 
-  private wasInside = true;
-  @Output() onClose: EventEmitter<boolean> = new EventEmitter();
   @Output() onRefresh: EventEmitter<boolean> = new EventEmitter();
 
   roles: Observable<unknown>;
   roleNames: Observable<unknown>;
-  constructor(private userSvc: UserService, private afs: AngularFirestore) { }
+  constructor(private userSvc: UserService, private afs: AngularFirestore) {super();}
 
   postCollection = this.afs.collection<Post>('/posts');
-
-  @HostListener('click') clickInside() {
-    this.wasInside = !this.wasInside;
-  }
-
-  @HostListener('document:click') clickOutside() {
-    if (!this.wasInside) {
-      this.onClose.emit(true);
-
-    }
-    this.wasInside = false;
-  }
 
   add_post() {
     let date = new Date();

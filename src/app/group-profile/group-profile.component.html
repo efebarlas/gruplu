@@ -1,1 +1,4 @@
-<h1>{{(group | async).name}}</h1>
+<div *ngIf="group$ | async as group">
+    <h1>{{group.data.name}}</h1>
+    <a *ngIf="isMember$ | async" [routerLink]="'edit'">Edit</a>
+</div>

@@ -1,0 +1,4 @@
+<p>{{this.data.toString()}}</p>
+<button *ngIf="user['id'] == userSvc.userId" (click)="toggleEdit()">Edit</button>
+
+<app-edit *ngIf='showEdit' [field]="this.field" (onClose)="closeEdit()"></app-edit>

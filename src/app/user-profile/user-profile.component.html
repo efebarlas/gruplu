@@ -1,1 +1,6 @@
-<h1>{{(user | async).name}}</h1>
+<div *ngIf="(user$ | async) as user">
+    <app-display [user] = 'user' [field]="'name'"></app-display>
+    <app-display [user] = 'user' [field]="'description'"></app-display>
+    <app-group-display [user] = 'user'></app-group-display>
+    <app-posts-display></app-posts-display>
+</div>

@@ -9,12 +9,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-  user: Observable<any>;
-  constructor(private userSvc: UserService, private router: Router) { }
+  user$: Observable<any>;
+  constructor(public userSvc: UserService, private router: Router) { }
 
   ngOnInit(): void {
     const userPath = this.router.url;
-    this.user = this.userSvc.getDocByUrl(userPath);
+    this.user$ = this.userSvc.getDocByUrl(userPath);
+    this.user$.subscribe((user) => {
+      if (!(user && user.data)) {
+        this.router.navigateByUrl('/404');
+      }
+    });
   }
 
 }

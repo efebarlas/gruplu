@@ -1,0 +1,6 @@
+<h1>
+    Groups
+</h1>
+<a [routerLink]="['/groups', group]" *ngFor="let group of groups | async">
+    {{group}}<br>
+</a>

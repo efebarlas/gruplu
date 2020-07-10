@@ -45,6 +45,13 @@ export class UserService {
     
    }
   
+  isUserInGroup(groupId: string): Observable<boolean> {
+    return this.afs.doc<Group>(`groups/${groupId}`).get().pipe(
+      map(groupDoc => groupDoc.data().members),
+      map(members => members.map(member => member.id)),
+      map(members => members.includes(this.userId))
+    );
+  }
 
   get(docId: string, field: string): Observable<any> {
     return this.afs.doc(docId).get().pipe(
@@ -53,7 +60,7 @@ export class UserService {
   }
 
   
-  isNameUnique(name: String):  Observable<boolean>{
+  isNameUnique(name: string):  Observable<boolean>{
     return this.afs.collection('users', ref => ref.where("name", "==", name))
     .get().pipe(
       map((usersRef) => !(usersRef && usersRef.size > 0))
@@ -70,11 +77,19 @@ export class UserService {
     this.afs.doc(`users/${this.userId}`).update({name: name_});
     this.router.navigateByUrl('');
   }
-
+  updateUser(new_value: any, field: string) {
+    this.afs.doc(`users/${this.userId}`).update({[field]: new_value});
+  }
   getRoles(): Observable<DocumentReference[]> {
     // return an observable of strings
     let user = this.afs.doc(`users/${this.userId}`).valueChanges();
     let obs = user.pipe(map(userEach => userEach['roles']));
+    return obs;
+  }
+
+  getRolesOf(userId: string): Observable<DocumentReference[] | null> {
+    let user = this.afs.doc(`users/${userId}`).valueChanges();
+    let obs = user.pipe(map<Document, DocumentReference[]>(userEach => userEach['roles']));
     return obs;
   }
 
@@ -84,11 +99,51 @@ export class UserService {
   getDocByUrl(docUrl: string): Observable<any> {
     const tree = this.router.parseUrl(docUrl).root.children[PRIMARY_OUTLET];
     const posterType = tree.segments[0].toString();
-    const name = tree.segments[1].toString();
+    const name = decodeURIComponent(tree.segments[1].toString());
     return this.afs.collection(posterType, ref => ref.where('name', '==', name).limit(1)).snapshotChanges().pipe(
-      map(ref => ref[0].payload.doc.data())
+      map(ref => {
+        return ref[0] ? {id: ref[0].payload.doc.id, data: ref[0].payload.doc.data()} : null;
+      })
     );
   }
+
+  getGroupsOf(userId: string) {
+    let arr = [];
+    let returningObs = new Observable((observer) => {
+      this.getRolesOf(userId).subscribe((roleRefs) => {
+          if (arr.length > 0) arr = [];
+          roleRefs.forEach((roleRef) => {
+            roleRef.get().then((snap) => {
+              if (snap.id != this.userId) {
+                arr.push(snap.data()['name']);
+              }
+            })
+          });
+        })
+      observer.next(arr);
+    });
+    
+    return returningObs;
+  }
+  getGroups() {
+    let arr = [];
+    let returningObs = new Observable((observer) => {
+      this.getRoles().subscribe((roleRefs) => {
+        arr = [];
+          roleRefs.forEach((roleRef) => {
+            roleRef.get().then((snap) => {
+              if (snap.id != this.userId) {
+                arr.push(snap.data()['name']);
+              }
+            })
+          });
+        })
+      observer.next(arr);
+    });
+    
+    return returningObs;
+  }
+
   getRoleNames() {
     let arr = [];
     let returningObs = new Observable((observer) => {

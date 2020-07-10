@@ -15,7 +15,12 @@ import { SetnameComponent } from './setname/setname.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { GroupProfileComponent } from './group-profile/group-profile.component';
-
+import { EditComponent } from './edit/edit.component';
+import { EditGroupComponent } from './edit-group/edit-group.component';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { DisplayComponent } from './display/display.component';
+import { GroupDisplayComponent } from './group-display/group-display.component';
+import { PostsDisplayComponent } from './posts-display/posts-display.component';
 
 
 @NgModule({
@@ -28,6 +33,11 @@ import { GroupProfileComponent } from './group-profile/group-profile.component';
     SetnameComponent,
     UserProfileComponent,
     GroupProfileComponent,
+    EditComponent,
+    EditGroupComponent,
+    DisplayComponent,
+    GroupDisplayComponent,
+    PostsDisplayComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +46,8 @@ import { GroupProfileComponent } from './group-profile/group-profile.component';
     FormsModule,
     ScrollingModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireFunctionsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
