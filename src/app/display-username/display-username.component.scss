@@ -1,0 +1,16 @@
+.parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+    height: 100%;
+  }
+
+  app-edit-username {
+    background: white;
+    position: absolute;
+    z-index: 1;
+    border-style: solid;
+    box-shadow: rgb(34, 153, 192);
+  }

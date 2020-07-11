@@ -1,6 +1,6 @@
 <div *ngIf="user && (user | async) as u">
-    <p *ngIf="this.data">{{this.data.toString()}}</p>
+    <p *ngIf="this.username">{{this.username.toString()}}</p>
     <button *ngIf="u != null && (u['id'] == userSvc.userId)" (click)="toggleEdit()">Edit</button>
 
-    <app-edit *ngIf='showEdit' [field]="this.field" (onClose)="closeEdit()"></app-edit>
+    <app-edit-username *ngIf='showEdit' (onClose)="closeEdit()"></app-edit-username>
 </div>

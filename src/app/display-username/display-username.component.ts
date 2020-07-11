@@ -1,17 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-display',
-  templateUrl: './display.component.html',
-  styleUrls: ['./display.component.scss']
+  selector: 'app-display-username',
+  templateUrl: './display-username.component.html',
+  styleUrls: ['./display-username.component.scss']
 })
-export class DisplayComponent implements OnInit {
-  @Input() field: string;
+export class DisplayUsernameComponent implements OnInit {
   @Input() user: Observable<any>;
-  data: any; 
+  username: any;
   showEdit: boolean = false;
 
   constructor(public userSvc: UserService, private router: Router) { }
@@ -24,11 +23,11 @@ export class DisplayComponent implements OnInit {
     this.showEdit = false;
   }
 
+
   ngOnInit(): void {
     this.user.subscribe(user => {
-      this.data = user.data[this.field] ? user.data[this.field] : `${this.field} not found`;
+      this.username = user.data.name ? user.data.name : 'Username not found';
     });
   }
 
-  
 }

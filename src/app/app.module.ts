@@ -21,6 +21,8 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { DisplayComponent } from './display/display.component';
 import { GroupDisplayComponent } from './group-display/group-display.component';
 import { PostsDisplayComponent } from './posts-display/posts-display.component';
+import { EditUsernameComponent } from './edit-username/edit-username.component';
+import { DisplayUsernameComponent } from './display-username/display-username.component';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { PostsDisplayComponent } from './posts-display/posts-display.component';
     DisplayComponent,
     GroupDisplayComponent,
     PostsDisplayComponent,
+    EditUsernameComponent,
+    DisplayUsernameComponent,
   ],
   imports: [
     BrowserModule,
