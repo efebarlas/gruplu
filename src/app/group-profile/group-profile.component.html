@@ -1,4 +1,6 @@
 <div *ngIf="group$ | async as group">
-    <h1>{{group.data.name}}</h1>
-    <a *ngIf="isMember$ | async" [routerLink]="'edit'">Edit</a>
+    <app-display-group-name [group]='group$'></app-display-group-name>
+    <!--<app-display-group-field [group]='group$' [field]="'description'"></app-display-group-field>
+    <app-display-members [group]='group$'></app-display-members>-->
+    <app-posts-display></app-posts-display>
 </div>

@@ -1,0 +1,8 @@
+<label>
+    Group Name:
+    <input type="text" [formControl]="input">
+    <p>
+        <button (click)="update()">Update group name</button>
+    </p>
+</label>
+<p *ngIf="!_isUnique">Sorry, this name isn't unique. Please try again.</p>

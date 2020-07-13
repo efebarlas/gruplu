@@ -6,7 +6,7 @@ import { Router, PRIMARY_OUTLET } from '@angular/router';
 import { auth } from 'firebase/app';
 import { User } from './models/User';
 import { concat } from 'rxjs';
-import { map, switchMap, tap, take } from 'rxjs/operators';
+import { map, switchMap, tap, take, filter } from 'rxjs/operators';
 import { Poster } from './models/Poster';
 import { Group } from './models/Group';
 import { Post } from './models/Post';
@@ -59,15 +59,15 @@ export class UserService {
     );
   }
 
-  
-  isNameUnique(name: string):  Observable<boolean>{
-    return this.afs.collection('users', ref => ref.where("name", "==", name))
+  isGroupNameUnique(name: string): Observable<boolean> {
+    return this.afs.collection('groups', ref => ref.where("name", "==", name))
     .get().pipe(
-      map((usersRef) => !(usersRef && usersRef.size > 0))
+      map((groupsRef) => !(groupsRef && groupsRef.size > 0))
     );
   }
-  isGroupNameUnique(name: String): Observable<boolean> {
-    return this.afs.collection('groups', ref => ref.where("name", "==", name))
+
+  isNameUnique(name: string):  Observable<boolean>{
+    return this.afs.collection('users', ref => ref.where("name", "==", name))
     .get().pipe(
       map((usersRef) => !(usersRef && usersRef.size > 0))
     );
@@ -80,6 +80,11 @@ export class UserService {
   updateUser(new_value: any, field: string) {
     this.afs.doc(`users/${this.userId}`).update({[field]: new_value});
   }
+
+  updateGroup(groupId: string, new_value: any, field: string) {
+    this.afs.doc(`groups/${groupId}`).update({[field]: new_value});
+  }
+
   getRoles(): Observable<DocumentReference[]> {
     // return an observable of strings
     let user = this.afs.doc(`users/${this.userId}`).valueChanges();
@@ -101,12 +106,17 @@ export class UserService {
     const posterType = tree.segments[0].toString();
     const name = decodeURIComponent(tree.segments[1].toString());
     return this.afs.collection(posterType, ref => ref.where('name', '==', name).limit(1)).snapshotChanges().pipe(
+      filter(ref => {return ref[0] != null}),
       map(ref => {
         return ref[0] ? {id: ref[0].payload.doc.id, data: ref[0].payload.doc.data()} : null;
       })
     );
   }
-
+  navigateToProfile() {
+    this.afs.doc(`users/${this.userId}`).get().subscribe((user) => {
+      this.router.navigateByUrl(`/users/${user.data().name}`);
+    });
+  }
   getGroupsOf(userId: string) {
     let arr = [];
     let returningObs = new Observable((observer) => {

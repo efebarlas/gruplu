@@ -23,7 +23,11 @@ import { GroupDisplayComponent } from './group-display/group-display.component';
 import { PostsDisplayComponent } from './posts-display/posts-display.component';
 import { EditUsernameComponent } from './edit-username/edit-username.component';
 import { DisplayUsernameComponent } from './display-username/display-username.component';
-
+import { DisplayGroupNameComponent } from './display-group-name/display-group-name.component';
+import { DisplayGroupFieldComponent } from './display-group-field/display-group-field.component';
+import { DisplayMembersComponent } from './display-members/display-members.component';
+import { EditGroupNameComponent } from './edit-group-name/edit-group-name.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,10 @@ import { DisplayUsernameComponent } from './display-username/display-username.co
     PostsDisplayComponent,
     EditUsernameComponent,
     DisplayUsernameComponent,
+    DisplayGroupNameComponent,
+    DisplayGroupFieldComponent,
+    DisplayMembersComponent,
+    EditGroupNameComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +59,8 @@ import { DisplayUsernameComponent } from './display-username/display-username.co
     ScrollingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireFunctionsModule
+    AngularFireFunctionsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'gruplu';
+  constructor(private userSvc: UserService, private router: Router) {}
+  navigateToProfile() {
+    this.userSvc.navigateToProfile();
+  }
+  logout() {
+    this.userSvc.logout().then(() => this.router.navigateByUrl('login'));
+  }
 }

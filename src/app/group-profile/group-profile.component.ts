@@ -12,14 +12,15 @@ import { Group } from '../models/Group';
 })
 export class GroupProfileComponent implements OnInit {
   group$: Observable<any>;
-  isMember$: Observable<Boolean>;
   constructor(public userSvc: UserService, private router: Router) { }
 
   ngOnInit(): void {
     const groupPath = this.router.url;
     this.group$ = this.userSvc.getDocByUrl(groupPath);
     this.group$.subscribe((group) => {
-      this.isMember$ = this.userSvc.isUserInGroup(group.id);
+      if (!(group && group.data)) {
+        this.router.navigateByUrl('/404');
+      }
     });
   }
 
