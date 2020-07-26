@@ -8,12 +8,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./group-display.component.scss']
 })
 export class GroupDisplayComponent implements OnInit {
-  @Input() user;
+  @Input() user: Observable<any>;
   groups: Observable<unknown>;
   constructor(private userSvc: UserService) { }
 
   ngOnInit(): void {
-    this.groups = this.userSvc.getGroupsOf(this.user.id);
+    this.user.subscribe((userEmit) => {
+      this.groups = this.userSvc.getGroupsOf(userEmit.id);
+    });
+
 
   }
 

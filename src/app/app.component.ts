@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'gruplu';
-  constructor(private userSvc: UserService, private router: Router) {}
+  constructor(public userSvc: UserService, private router: Router) {}
   navigateToProfile() {
     this.userSvc.navigateToProfile();
   }

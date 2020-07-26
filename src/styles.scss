@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Baloo Da 2', cursive, "Helvetica Neue", sans-serif; }
 .shadow {
@@ -11,4 +15,23 @@ body { margin: 0; font-family: 'Baloo Da 2', cursive, "Helvetica Neue", sans-ser
 .header {
     font-family: 'Baloo Da 2', cursive, "Helvetica Neue";
     font-size: x-large;
+}
+
+.home {
+    display: grid;
+    place-items: center;
+    position: relative;
+    width: 100%;
+}
+.spacer {
+    width: 100%;
+    height: 50px;
+}
+.button {
+    width: 100px;
+    font-family: 'Baloo Da 2';
+    margin: 10px 10px 10px 10px;
+    font-weight:500;
+    background-color: #59d99b;
+    
 }

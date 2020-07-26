@@ -1,20 +1,17 @@
 nav {
     position: fixed;
     width: 100vw;
-    margin: 0;
-    padding: 0;
     background-color: #5a98db;
     border-radius: 0px 0px 5px 5px;
     display: flex;
+    margin-right: 0px;
+    z-index: 999;
     justify-content: space-between;
-
 }
 li {
     list-style-type: none;
-    margin: 0;
     font-family: 'Baloo Da 2';
     font-weight:500;
-    padding: 0;
 }
 .lean-left {
     display: flex;
@@ -25,7 +22,7 @@ li {
     align-items: center;
 }
 li button {
-    width: 100px;
+    width: 50px;
     font-family: 'Baloo Da 2';
     margin: 10px 10px 10px 10px;
     font-weight:500;

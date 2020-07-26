@@ -1,41 +1,22 @@
-cdk-virtual-scroll-viewport {
-    z-index: 1;
-    position: absolute;
-    height: 50vh;
-    background: lightblue;
-    width: 80%;
-  
-    // Bonus points
-    &::-webkit-scrollbar {
-      width: 0em;
-    }
-  
-  }
+
 
   .post {
     margin: 5px 5px 5px 5px;
   }
   app-compose, app-create-group{
     background: white;
+    align-self: center;
     position: absolute;
-    z-index: 1;
-    border-style: dotted;
+    z-index: 3;
+    border-style: solid;
   }
-  .buttons {
-    align-self:flex-start;
-    margin-right: auto;
-    position: absolute;
-    float: left;
-    list-style-type: none;
-    margin:0;
-    padding:0;
-    z-index:1;
-  }
-  .parent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 0;
-    height: 100%;
+  cdk-virtual-scroll-viewport {
+    height: 90vh;
+    width: 100%;
+    background: lightblue;
+    // Bonus points
+    &::-webkit-scrollbar {
+      width: 0em;
+    }
+  
   }

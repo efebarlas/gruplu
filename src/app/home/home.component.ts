@@ -110,10 +110,12 @@ export class HomeComponent implements OnInit {
 
   toggleCompose() {
     this.showCompose = !this.showCompose;
+    console.log(`showCompose: ${this.showCompose}`);
   }
 
   closeCompose() {
     this.showCompose = false;
+    console.log(`showCompose: ${this.showCompose}`);
   }
 
   toggleGroup() {

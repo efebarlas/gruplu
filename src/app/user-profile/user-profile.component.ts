@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-user-profile',
@@ -10,11 +12,14 @@ import { Observable } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
   user$: Observable<any>;
-  constructor(public userSvc: UserService, private router: Router) { }
+  constructor(private route: ActivatedRoute, public userSvc: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    const userPath = this.router.url;
-    this.user$ = this.userSvc.getDocByUrl(userPath);
+
+    this.user$ = this.route.params.pipe(
+      map((params) => params['name']),
+      switchMap((name) => this.userSvc.getUserByName(name))
+    );
     this.user$.subscribe((user) => {
       if (!(user && user.data)) {
         this.router.navigateByUrl('/404');

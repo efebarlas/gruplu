@@ -42,6 +42,7 @@ export class ComposeComponent extends ClickAway implements OnInit {
   ngOnInit(): void {
     this.roles = this.userSvc.getRoles();
     this.roleNames = this.userSvc.getRoleNames();
+    console.log('open compose');
   }
 
 }

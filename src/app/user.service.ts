@@ -6,7 +6,7 @@ import { Router, PRIMARY_OUTLET } from '@angular/router';
 import { auth } from 'firebase/app';
 import { User } from './models/User';
 import { concat } from 'rxjs';
-import { map, switchMap, tap, take, filter } from 'rxjs/operators';
+import { map, switchMap, tap, take, filter, timeoutWith } from 'rxjs/operators';
 import { Poster } from './models/Poster';
 import { Group } from './models/Group';
 import { Post } from './models/Post';
@@ -97,7 +97,9 @@ export class UserService {
     let obs = user.pipe(map<Document, DocumentReference[]>(userEach => userEach['roles']));
     return obs;
   }
-
+  getUserByName(userName: string): Observable<any> {
+    return this.getDocByUrl(`users/${userName}`);
+  }
   getDoc(docId: string): Observable<Action<DocumentSnapshot<any>>> {
     return this.afs.doc(docId).snapshotChanges();
   }
@@ -221,6 +223,7 @@ export class UserService {
   }
   
   async logout() {
+    this.userId = null;
     await this.auth.signOut();
   }
 }

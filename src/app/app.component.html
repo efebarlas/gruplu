@@ -1,12 +1,16 @@
-<nav class='navbar shadow'>
-    <ul class='lean-left'>
-        <li><h1 class='header'>Gruplu</h1></li>
-        <li><button [routerLink]="['/home']">Home</button></li>
-        <li><button (click)='navigateToProfile()'>Profil</button></li>
-    </ul>
-    <ul class='lean-right'>
-        <li><button (click)='logout()'>Logout</button></li>
-    </ul>
-</nav>
-
-<router-outlet></router-outlet>
+<div class="idk">
+    <nav *ngIf='this.userSvc.userId' class='navbar shadow'>
+        <ul class='lean-left'>
+            <li><h1 class='header'>Gruplu</h1></li>
+            <li><button [routerLink]="['/home']">Home</button></li>
+            <li><button (click)='navigateToProfile()'>Profil</button></li>
+        </ul>
+        <ul class='lean-right'>
+            <li><button (click)='logout()'>Logout</button></li>
+        </ul>
+    </nav>
+    <div class="spacer">
+        &nbsp;
+    </div>
+    <router-outlet></router-outlet>
+</div>
