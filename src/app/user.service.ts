@@ -10,11 +10,23 @@ import { map, switchMap, tap, take, filter, timeoutWith } from 'rxjs/operators';
 import { Poster } from './models/Poster';
 import { Group } from './models/Group';
 import { Post } from './models/Post';
+import { firestore } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  inviteSent(id: any): Observable<boolean> {
+    return this.afs.doc(`groups/${id}`).get().pipe(
+      map((group) => group.data()['receivedRequests']),
+      map(reqs => reqs.map(req => req.id)),
+      map(reqs => {
+        if (reqs && reqs.includes(this.userId)) {
+          return true;
+        } else return false;
+      })
+    );
+  }
   userId: string;
   groupCollection = this.afs.collection<Group>('/groups');
 
@@ -214,7 +226,15 @@ export class UserService {
       obs.next(post.on_behalf_of.toString());
     });
   }
-
+  
+  sendInvite(groupId) {
+    this.afs.doc(`groups/${groupId}`).update({
+      receivedRequests: firestore.FieldValue.arrayUnion(this.afs.doc(`users/${this.userId}`).ref)
+    });
+    this.afs.doc(`users/${this.userId}`).update({
+      sentRequests: firestore.FieldValue.arrayUnion(this.afs.doc(`groups/${groupId}`).ref)
+    });
+  }
   async login() {
     try {
       await this.auth.signInWithPopup(new auth.GoogleAuthProvider());

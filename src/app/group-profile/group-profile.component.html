@@ -3,4 +3,6 @@
     <!--<app-display-group-field [group]='group$' [field]="'description'"></app-display-group-field>
     <app-display-members [group]='group$'></app-display-members>-->
     <app-posts-display></app-posts-display>
+    <button *ngIf="!inviteSent" class="button" (click)="sendInvite()">Send Invite</button>
+    <p *ngIf="inviteSent">Invite Sent</p>
 </div>
