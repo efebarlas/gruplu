@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ClickAway } from '../ClickAway';
+import { ClickAway } from '../click-away';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 

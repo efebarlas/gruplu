@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ChangeDetectorRef } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -28,6 +28,7 @@ import { DisplayGroupFieldComponent } from './display-group-field/display-group-
 import { DisplayMembersComponent } from './display-members/display-members.component';
 import { EditGroupNameComponent } from './edit-group-name/edit-group-name.component';
 import { MatCardModule } from '@angular/material/card';
+import { ClickOutsideDirective } from './click-outside-directive';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MatCardModule } from '@angular/material/card';
     DisplayGroupFieldComponent,
     DisplayMembersComponent,
     EditGroupNameComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

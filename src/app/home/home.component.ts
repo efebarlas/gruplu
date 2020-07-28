@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   offset = new BehaviorSubject(null);
   infinite: Observable<any[]>;
 
-  constructor(private userSvc: UserService, private afs: AngularFirestore, private auth: AngularFireAuth, private router: Router) {
+  constructor(private change: ChangeDetectorRef, private userSvc: UserService, private afs: AngularFirestore, private auth: AngularFireAuth, private router: Router) {
 
     
     /*this.afs.collection<Post>('/posts', ref => ref.orderBy("date", "desc"))
@@ -110,20 +110,22 @@ export class HomeComponent implements OnInit {
 
   toggleCompose() {
     this.showCompose = !this.showCompose;
-    console.log(`showCompose: ${this.showCompose}`);
+    this.change.detectChanges();
   }
 
   closeCompose() {
     this.showCompose = false;
-    console.log(`showCompose: ${this.showCompose}`);
+    this.change.detectChanges();
   }
 
   toggleGroup() {
     this.showGroup = !this.showGroup;
+    this.change.detectChanges();
   }
 
   closeGroup() {
     this.showGroup = false;
+    this.change.detectChanges();
   }
 
   refresh() {

@@ -6,14 +6,13 @@ import { User } from '../models/User';
 import { AngularFirestore, DocumentReference, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 import { Observable } from 'rxjs';
-import { ClickAway } from '../ClickAway';
 
 @Component({
   selector: 'app-compose',
   templateUrl: './compose.component.html',
   styleUrls: ['./compose.component.scss']
 })
-export class ComposeComponent extends ClickAway implements OnInit {
+export class ComposeComponent implements OnInit {
   @Input() userId: string;
   
   @Input() post_text: string;
@@ -23,7 +22,7 @@ export class ComposeComponent extends ClickAway implements OnInit {
 
   roles: Observable<unknown>;
   roleNames: Observable<unknown>;
-  constructor(private userSvc: UserService, private afs: AngularFirestore) {super();}
+  constructor(private userSvc: UserService, private afs: AngularFirestore) {}
 
   postCollection = this.afs.collection<Post>('/posts');
 
@@ -35,7 +34,6 @@ export class ComposeComponent extends ClickAway implements OnInit {
       date: date
     }).then((post) => {
       this.userSvc.addPostToPoster(post, this.on_behalf);
-      this.onClose.emit(true);
       this.onRefresh.emit(true);
     });
   }

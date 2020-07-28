@@ -18,11 +18,13 @@ import { firestore } from 'firebase/app';
 export class UserService {
   inviteSent(id: any): Observable<boolean> {
     return this.afs.doc(`groups/${id}`).get().pipe(
-      map((group) => group.data()['receivedRequests']),
-      map(reqs => reqs.map(req => req.id)),
-      map(reqs => {
-        if (reqs && reqs.includes(this.userId)) {
-          return true;
+      map((group) => {
+        let reqs = group.data()['receivedRequests'];
+        if (reqs) {
+          reqs = reqs.map(req => req.id);
+          if (reqs && reqs.includes(this.userId)) {
+            return true;
+          }
         } else return false;
       })
     );
@@ -222,7 +224,6 @@ export class UserService {
 
   getPoster(post: Post): Observable<String> {
     return new Observable<String>(obs => {
-      console.log(this.afs.doc(post.on_behalf_of));
       obs.next(post.on_behalf_of.toString());
     });
   }

@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, Input, Output, EventEmitter } from '@a
 import { FormControl, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ClickAway } from '../ClickAway';
+import { ClickAway } from '../click-away';
 
 @Component({
   selector: 'app-edit',

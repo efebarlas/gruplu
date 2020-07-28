@@ -34,18 +34,4 @@ export class CreateGroupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @HostListener('click') clickInside() {
-    this.wasInside = !this.wasInside;
-  }
-
-  @HostListener('document:click') clickOutside() {
-    if (!this.wasInside) {
-      this.onClose.emit(true);
-
-    }
-    this.wasInside = false;
-  }
-
-  
-
 }

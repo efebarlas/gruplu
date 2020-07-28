@@ -3,11 +3,11 @@
             <button class="button" #toggle_group (click)="toggleGroup()">Add Group</button>
             <button class="button" #toggle (click)="toggleCompose()">Add Post as User</button>
         </div>
-        <app-compose [userId]="userId" *ngIf="showCompose" (onRefresh)="refresh()" (onClose)="closeCompose()"></app-compose>
-        <app-create-group *ngIf="showGroup" (onClose)="closeGroup()"></app-create-group>
+        <app-compose (clickOutside)="closeCompose()" [userId]="userId" *ngIf="showCompose" (onRefresh)="refresh()"></app-compose>
+        <app-create-group (clickOutside)="closeGroup()" *ngIf="showGroup"></app-create-group>
         <ng-container *ngIf="infinite | async as posts">
             <cdk-virtual-scroll-viewport itemSize="100" (scrolledIndexChange)="nextBatch($event, (posts[posts.length - 1].date))" class="example-viewport">
-                <div *cdkVirtualFor="let post of posts; templateCacheSize: 5; trackBy: trackByIdx" class="example-item">
+                <div *cdkVirtualFor="let post of posts; templateCacheSize: 20; trackBy: trackByIdx" class="example-item">
                     <mat-card class="post">
                         <mat-card-header>
                             <mat-card-title [routerLink]="[post.poster.isGroup ? '/groups' : '/users', post.poster.name]">{{post.poster.name}}</mat-card-title>
