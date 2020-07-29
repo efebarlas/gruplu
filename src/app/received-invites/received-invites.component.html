@@ -1,0 +1,8 @@
+<div class="grey_bordered right_middle">
+    <h2 class="header">Pending Requests</h2>
+    <div *ngFor="let req of (inviteList | async)">
+        <p class="username" [routerLink]="['/users', req | async]">{{req | async}}</p>
+        <button class="circular_button light_shadow"></button>
+        <button class="circular_button light_shadow"></button>
+    </div>
+</div> 

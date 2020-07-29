@@ -29,6 +29,7 @@ import { DisplayMembersComponent } from './display-members/display-members.compo
 import { EditGroupNameComponent } from './edit-group-name/edit-group-name.component';
 import { MatCardModule } from '@angular/material/card';
 import { ClickOutsideDirective } from './click-outside-directive';
+import { ReceivedInvitesComponent } from './received-invites/received-invites.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ClickOutsideDirective } from './click-outside-directive';
     DisplayGroupFieldComponent,
     DisplayMembersComponent,
     EditGroupNameComponent,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    ReceivedInvitesComponent
   ],
   imports: [
     BrowserModule,

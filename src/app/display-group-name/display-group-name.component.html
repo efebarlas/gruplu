@@ -1,5 +1,5 @@
 <div *ngIf="group && (group | async) as g">
     <p *ngIf="this.groupName">{{this.groupName.toString()}}</p>
     <button *ngIf="isMember" (click)="toggleEdit()">Edit</button>
-    <app-edit-group-name [groupId]='g["id"]' *ngIf='showEdit' (onClose)="closeEdit()"></app-edit-group-name>
+    <app-edit-group-name [groupId]='g["id"]' *ngIf='showEdit' (onClose)="closeEdit()" (clickOutside)="closeEdit()"></app-edit-group-name>
 </div>

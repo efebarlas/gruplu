@@ -1,22 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ClickAway } from '../click-away';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-edit-username',
   templateUrl: './edit-username.component.html',
   styleUrls: ['./edit-username.component.scss']
 })
-export class EditUsernameComponent extends ClickAway implements OnInit {
+export class EditUsernameComponent implements OnInit {
   input = new FormControl('', Validators.required);
   _isUnique: Boolean = true;
 
-  constructor(private router: Router, private userSvc: UserService) {
-    super();
-  }
+  constructor(private router: Router, private userSvc: UserService) {}
 
+  onClose = new EventEmitter<boolean>();
   update() {
     const name = this.input.value;
     this.userSvc.isNameUnique(name).subscribe((isUnique) => {

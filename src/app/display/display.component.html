@@ -2,5 +2,5 @@
     <p *ngIf="this.data">{{this.data.toString()}}</p>
     <button *ngIf="u != null && (u['id'] == userSvc.userId)" (click)="toggleEdit()">Edit</button>
 
-    <app-edit *ngIf='showEdit' [field]="this.field" (onClose)="closeEdit()"></app-edit>
+    <app-edit *ngIf='showEdit' [field]="this.field" (clickOutside)="closeEdit()" (onClose)="closeEdit()"></app-edit>
 </div>
