@@ -16,6 +16,10 @@ import { firestore } from 'firebase/app';
   providedIn: 'root'
 })
 export class UserService {
+  declineRequest(req: Observable<string>) {
+  }
+  acceptRequest(req: Observable<string>) {
+  }
   inviteSent(id: any): Observable<boolean> {
     return this.afs.doc(`groups/${id}`).get().pipe(
       map((group) => {

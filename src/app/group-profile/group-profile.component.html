@@ -3,7 +3,7 @@
     <!--<app-display-group-field [group]='group$' [field]="'description'"></app-display-group-field>
     <app-display-members [group]='group$'></app-display-members>-->
     <app-posts-display ></app-posts-display>
-    <app-received-invites [groupId]='groupId' [inviteList]='inviteList'></app-received-invites>
-    <button *ngIf="!(inviteSent && isMember | async)" class="button" (click)="sendInvite()">Send Invite</button>
+    <app-received-invites *ngIf="isMember | async" [groupId]='groupId' [inviteList]='inviteList'></app-received-invites>
+    <button *ngIf="!(inviteSent || (isMember | async))" class="button" (click)="sendInvite()">Send Invite</button>
     <p *ngIf="(inviteSent && !(isMember | async))">Invite Sent</p>
 </div>

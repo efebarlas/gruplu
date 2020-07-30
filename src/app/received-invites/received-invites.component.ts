@@ -13,7 +13,14 @@ export class ReceivedInvitesComponent implements OnInit {
   @Input() inviteList: Observable<any[]>;
 
   constructor(private userSvc: UserService) { }
+  
+  acceptRequest(req: Observable<string>) {
+    this.userSvc.acceptRequest(req);
+  }
 
+  declineRequest(req: Observable<string>) {
+    this.userSvc.declineRequest(req);
+  }
   ngOnInit(): void {
     this.inviteList = this.inviteList.pipe(
       map(ids => {

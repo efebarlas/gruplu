@@ -43,12 +43,22 @@ body { margin: 0; font-family: 'Baloo Da 2', cursive, "Helvetica Neue", sans-ser
 }
 
 .grey_bordered {
+    border-width: medium;
+    border-radius: 5px;
+    border-color: lightgrey;
+    border-style: solid;
+}
+.grey_light_bordered {
     border-width: thin;
     border-radius: 5px;
     border-color: lightgrey;
     border-style: solid;
 }
-
+.invite_container {
+    border-bottom: thin solid lightgrey;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+}
 .username {
     font-size: large;
 }
@@ -56,10 +66,14 @@ body { margin: 0; font-family: 'Baloo Da 2', cursive, "Helvetica Neue", sans-ser
 .circular_button {
     border-width: thin;
     border-radius: 50%;
-    border-color: black;
+    border-color: #5a98db;
     border-style: solid;
     width: 30px;
     height: 30px;
+    font-size: 18px;
+    text-align: center;
+    color: rgb(255,255,255);
+    background-color: #5a98db;
 }
 
 .right_middle {
