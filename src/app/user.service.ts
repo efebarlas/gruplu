@@ -16,9 +16,34 @@ import { firestore } from 'firebase/app';
   providedIn: 'root'
 })
 export class UserService {
-  declineRequest(req: Observable<string>) {
+  declineRequest(groupId: string, uid: DocumentReference) {
+    let batch = this.afs.firestore.batch();
+
+    let groupDoc = this.afs.doc(`groups/${groupId}`).ref;
+    
+    batch.update(groupDoc, {
+      receivedRequests: firestore.FieldValue.arrayRemove(uid),
+    });
+
+    return batch.commit();
   }
-  acceptRequest(req: Observable<string>) {
+  acceptRequest(groupId: string, uid: DocumentReference) {
+    let batch = this.afs.firestore.batch();
+
+    let groupDoc = this.afs.doc(`groups/${groupId}`).ref;
+    let userDoc = uid;
+
+    batch.update(groupDoc, {
+      receivedRequests: firestore.FieldValue.arrayRemove(userDoc),
+      members: firestore.FieldValue.arrayUnion(userDoc)
+    });
+    
+    batch.update(userDoc, {
+      sentRequests: firestore.FieldValue.arrayUnion(groupDoc),
+      roles: firestore.FieldValue.arrayUnion(groupDoc)
+    });
+
+    return batch.commit();
   }
   inviteSent(id: any): Observable<boolean> {
     return this.afs.doc(`groups/${id}`).get().pipe(
@@ -41,22 +66,23 @@ export class UserService {
               private router: Router) {
     this.auth.authState.subscribe(user => {
       if(user) {
+        let batch = this.afs.firestore.batch();
         this.userId = user.uid;
-        let strr = `users/${this.userId}`;
-        this.afs.doc(strr).snapshotChanges().subscribe((docSnapshot) => {
+        let userDoc = this.afs.collection(`users`).doc(this.userId);
+        userDoc.snapshotChanges().subscribe((docSnapshot) => {
           if (!docSnapshot.payload.exists) {
-            this.afs.collection(`users`).doc(this.userId).set({uid: this.userId});
-          } else {
-            if(!docSnapshot.payload.data()['roles']) {
-              this.afs.doc(`users/${this.userId}`).update({roles: [this.afs.doc(`users/${this.userId}`).ref]});
-            } 
-            if (!docSnapshot.payload.data()['name'] || docSnapshot.payload.data()['name'] == 'isyanqar47') {
-              this.router.navigateByUrl('/name');
-            }
-            if (!docSnapshot.payload.data()['posts']) {
-              this.afs.doc(`users/${this.userId}`).update({posts: []});
-            }
+            batch.set(userDoc.ref, {uid: this.userId});
           }
+          if (!docSnapshot.payload.data()['roles']) {
+            batch.update(userDoc.ref, {roles: [userDoc.ref]});
+          } 
+          if (!docSnapshot.payload.data()['name'] || docSnapshot.payload.data()['name'] == 'isyanqar47') {
+            this.router.navigateByUrl('/name');
+          }
+          if (!docSnapshot.payload.data()['posts']) {
+            batch.update(userDoc.ref, {posts: []});
+          }
+          batch.commit();
         });
       }
     });
@@ -220,7 +246,6 @@ export class UserService {
 
     await this.groupCollection.add(data).then((role) => {
       rolesList.push(role);
-      
     });
     userRef.update({roles: rolesList});
 

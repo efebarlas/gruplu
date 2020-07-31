@@ -1,8 +1,13 @@
 <div class="grey_bordered right_middle">
     <h2 class="header">Pending Requests</h2>
-    <div class="invite_container" *ngFor="let req of (inviteList | async)">
-        <p class="username" [routerLink]="['/users', req | async]">{{req | async}}</p>
-        <button (click)="acceptRequest(req)" class="circular_button material-icons light_shadow">&#xE8DC;</button>
-        <button (click)="declineRequest(req)" class="circular_button material-icons light_shadow">&#xE8DB;</button>
+    <div *ngFor="let req of (inviteList | async)">
+        <div *ngIf='!message' class="invite_container">
+            <p class="username" [routerLink]="['/users', req['name']]">{{req['name']}}</p>
+            <button (click)="acceptRequest(req['id'])" class="circular_button material-icons light_shadow">&#xE8DC;</button>
+            <button (click)="declineRequest(req['id'])" class="circular_button material-icons light_shadow">&#xE8DB;</button>
+        </div>
+        <div *ngIf='message' class="request_status">
+            <p>{{message}}</p>
+        </div>
     </div>
 </div> 
