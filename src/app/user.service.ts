@@ -39,7 +39,7 @@ export class UserService {
     });
     
     batch.update(userDoc, {
-      sentRequests: firestore.FieldValue.arrayUnion(groupDoc),
+      sentRequests: firestore.FieldValue.arrayRemove(groupDoc),
       roles: firestore.FieldValue.arrayUnion(groupDoc)
     });
 
@@ -66,27 +66,39 @@ export class UserService {
               private router: Router) {
     this.auth.authState.subscribe(user => {
       if(user) {
-        let batch = this.afs.firestore.batch();
         this.userId = user.uid;
         let userDoc = this.afs.collection(`users`).doc(this.userId);
-        userDoc.snapshotChanges().subscribe((docSnapshot) => {
-          if (!docSnapshot.payload.exists) {
-            batch.set(userDoc.ref, {uid: this.userId});
-          }
-          if (!docSnapshot.payload.data()['roles']) {
-            batch.update(userDoc.ref, {roles: [userDoc.ref]});
-          } 
-          if (!docSnapshot.payload.data()['name'] || docSnapshot.payload.data()['name'] == 'isyanqar47') {
+        this.afs.firestore.runTransaction((transaction) => {
+          return transaction.get(userDoc.ref).then((doc) => {
+            let nameNotFound = false;
+            if (!doc.exists) {
+              transaction.set(userDoc.ref, {uid: this.userId});
+              transaction.update(userDoc.ref, {roles: [userDoc.ref]});
+              nameNotFound = true;
+              transaction.update(userDoc.ref, {posts: []});
+              return nameNotFound;
+            }
+            if (!doc.data()['roles']) {
+              transaction.update(userDoc.ref, {roles: [userDoc.ref]});
+            }
+            if (!doc.data()['name'] || doc.data()['name'] == 'isyanqar47') {
+              nameNotFound = true;
+            }
+            if (!doc.data()['posts']) {
+              transaction.update(userDoc.ref, {posts: []});
+            }
+            return nameNotFound;
+          });
+        }).then(nameNotFound => {
+          if (nameNotFound) {
             this.router.navigateByUrl('/name');
           }
-          if (!docSnapshot.payload.data()['posts']) {
-            batch.update(userDoc.ref, {posts: []});
-          }
-          batch.commit();
+        }).catch((err) => {
+          console.log(err);
+          //TODO: MAKE MESSAGE SERVICE, ECHO ERRORS
         });
       }
     });
-    
    }
   
   isUserInGroup(groupId: string): Observable<boolean> {
