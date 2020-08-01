@@ -1,6 +1,7 @@
-<div *ngIf="(user$ | async) as user">
+<div class="user-profile" *ngIf="(user$ | async) as user">
     <app-display-username [user] = 'user$'></app-display-username>
     <app-display [user] = 'user$' [field]="'description'"></app-display>
+    <app-display-skills [user] = 'user$'></app-display-skills>
     <app-group-display [user] = 'user$'></app-group-display>
     <app-posts-display></app-posts-display>
 </div>

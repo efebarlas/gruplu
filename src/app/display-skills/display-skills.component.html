@@ -1,0 +1,23 @@
+<div *ngIf="skillList | async" class="grey_bordered skills">
+    <h2 class="header">Skills</h2>
+    <div class="align_right_button_with_text" *ngFor="let skill of (skillList | async)">
+        <p>{{skill}}</p>
+        <button (click)='removeSkill(skill)' *ngIf='isUs' class="circular_button material-icons light_shadow">
+            &#xE15D;
+        </button>
+    </div>
+</div>
+<div class="grey_bordered field_adder" *ngIf="isUs">
+    <div class="button_with_text" *ngIf="!button_pressed; else field_input" (click)="button_pressed=true">
+        <p class="button_text">Add Skill</p>
+        <button class="circular_button material-icons light_shadow">&#xE148;</button>
+    </div>
+    <ng-template #field_input>
+        <div (clickOutside)="button_pressed=false" class="button_with_text">
+            <label>Skill:
+                <input type="text" [formControl]="skill" required>
+            </label>
+            <button (click)="addSkill()" class="circular_button material-icons light_shadow">&#xE148;</button>
+        </div>
+    </ng-template>
+</div>

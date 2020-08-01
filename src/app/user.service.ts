@@ -16,6 +16,14 @@ import { firestore } from 'firebase/app';
   providedIn: 'root'
 })
 export class UserService {
+  addSkill(skill: string) {
+    this.updateUser(firestore.FieldValue.arrayUnion(skill), 'skills');
+  }
+  
+  removeSkill(skill: string) {
+    this.updateUser(firestore.FieldValue.arrayRemove(skill), 'skills');
+  }
+
   declineRequest(groupId: string, uid: DocumentReference) {
     let batch = this.afs.firestore.batch();
 
