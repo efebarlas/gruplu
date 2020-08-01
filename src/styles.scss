@@ -11,6 +11,9 @@ body { margin: 0; font-family: 'Baloo Da 2', cursive, "Helvetica Neue", sans-ser
     width: fit-content;
 }
 
+mat-card {
+    height: 118px;
+}
 .align_right_button_with_text {
     display: flex;
     flex-direction: row;
