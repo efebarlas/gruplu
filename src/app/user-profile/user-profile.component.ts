@@ -15,7 +15,6 @@ export class UserProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute, public userSvc: UserService, private router: Router) { }
 
   ngOnInit(): void {
-
     this.user$ = this.route.params.pipe(
       map((params) => params['name']),
       switchMap((name) => this.userSvc.getUserByName(name))

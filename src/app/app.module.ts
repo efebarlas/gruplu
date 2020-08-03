@@ -31,6 +31,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ClickOutsideDirective } from './click-outside-directive';
 import { ReceivedInvitesComponent } from './received-invites/received-invites.component';
 import { DisplaySkillsComponent } from './display-skills/display-skills.component';
+import { DisplayLocationComponent } from './display-location/display-location.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DisplaySkillsComponent } from './display-skills/display-skills.componen
     EditGroupNameComponent,
     ClickOutsideDirective,
     ReceivedInvitesComponent,
-    DisplaySkillsComponent
+    DisplaySkillsComponent,
+    DisplayLocationComponent
   ],
   imports: [
     BrowserModule,

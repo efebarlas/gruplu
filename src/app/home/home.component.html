@@ -1,7 +1,7 @@
 <div class="home">
         <div class="buttons">
             <button class="button" #toggle_group (click)="toggleGroup()">Add Group</button>
-            <button class="button" #toggle (click)="toggleCompose()">Add Post as User</button>
+            <button class="button" #toggle (click)="toggleCompose()">Add Post</button>
         </div>
         <app-compose (clickOutside)="closeCompose()" [userId]="userId" *ngIf="showCompose" (onRefresh)="refresh()"></app-compose>
         <app-create-group (clickOutside)="closeGroup()" *ngIf="showGroup"></app-create-group>

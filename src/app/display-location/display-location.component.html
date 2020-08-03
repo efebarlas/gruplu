@@ -1,0 +1,13 @@
+<div class="grey_bordered" *ngIf="noLocation && isUs">
+    <p>Size yakın kişi ve grupları önerebilmemiz için yaşadığınız şehri girmenizi tavsiye ederiz.</p>
+    <div class="button_with_text">
+        <label>
+            Şehir:
+            <input type="text" [formControl]="city">
+        </label>
+        <button (click)='setLocation()' class="light_shadow">Şehir Ekle</button>
+    </div>
+</div>
+<div *ngIf="location$ | async as location">
+    <p>{{location}}</p>
+</div>

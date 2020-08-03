@@ -16,6 +16,10 @@ import { firestore } from 'firebase/app';
   providedIn: 'root'
 })
 export class UserService {
+  setLocation(value: string) {
+    this.updateUser(value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),'city');
+  }
+
   addSkill(skill: string) {
     this.updateUser(firestore.FieldValue.arrayUnion(skill), 'skills');
   }

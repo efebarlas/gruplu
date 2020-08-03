@@ -1,4 +1,4 @@
-<div *ngIf="skillList | async" class="grey_bordered skills">
+<div *ngIf="(skillList | async)?.length > 0" class="grey_bordered skills">
     <h2 class="header">Skills</h2>
     <div class="align_right_button_with_text" *ngFor="let skill of (skillList | async)">
         <p>{{skill}}</p>
@@ -7,6 +7,7 @@
         </button>
     </div>
 </div>
+
 <div class="grey_bordered field_adder" *ngIf="isUs">
     <div class="button_with_text" *ngIf="!button_pressed; else field_input" (click)="button_pressed=true">
         <p class="button_text">Add Skill</p>
