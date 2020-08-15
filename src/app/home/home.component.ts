@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   offset = new BehaviorSubject(null);
   infinite: Observable<any[]>;
 
-  constructor(private change: ChangeDetectorRef, private userSvc: UserService, private afs: AngularFirestore, private auth: AngularFireAuth, private router: Router) {
+  constructor(private change: ChangeDetectorRef, public userSvc: UserService, private afs: AngularFirestore, private auth: AngularFireAuth, private router: Router) {
 
     
     /*this.afs.collection<Post>('/posts', ref => ref.orderBy("date", "desc"))

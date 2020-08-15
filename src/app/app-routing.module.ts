@@ -16,10 +16,10 @@ const redirectLoggedInToHome = () => redirectLoggedInTo(['']);
 const routes: Routes = [
   { path: 'groups/:name/edit', pathMatch: "full", component: EditGroupComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'users/:name/edit', pathMatch: "full", component: EditComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'users/:name', component: UserProfileComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'groups/:name', component: GroupProfileComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'users/:name', component: UserProfileComponent },
+  { path: 'groups/:name', component: GroupProfileComponent  },
   { path: 'login', pathMatch: "full", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToHome } },
-  { path: '', pathMatch: "full", component: HomeComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: '', pathMatch: "full", component: HomeComponent},
   { path: 'name', pathMatch: "full", component: SetnameComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: '**', redirectTo: '' }
 ];

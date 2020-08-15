@@ -1,5 +1,5 @@
 <div class="home">
-        <div class="buttons">
+        <div *ngIf="this.userSvc.userId" class="buttons">
             <button class="button" #toggle_group (click)="toggleGroup()">Add Group</button>
             <button class="button" #toggle (click)="toggleCompose()">Add Post</button>
         </div>
